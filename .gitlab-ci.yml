@@ -1,4 +1,5 @@
 pages:
+  image: alpine:latest
   script:
     - echo '😃'
   artifacts:
