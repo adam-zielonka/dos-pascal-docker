@@ -8,3 +8,14 @@ pages:
     - public
   only:
     - master
+
+pages:
+  image: registry.gitlab.com/adam-zielonka-pro/deska
+  script:
+    - echo '😃'
+    - rm -fr public
+    - mv build public
+  artifacts:
+    expire_in: 1 week
+    paths:
+    - public
