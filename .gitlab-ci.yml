@@ -12,6 +12,7 @@ pages:
 build:
   image: registry.gitlab.com/adam-zielonka-pro/deska
   script:
+    - echo $PWD
     - echo '😃'
     - rm -fr public
     - mv build public
