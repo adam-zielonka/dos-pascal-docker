@@ -12,13 +12,11 @@ pages:
 build:
   image: registry.gitlab.com/adam-zielonka-pro/deska
   script:
-    - ls -alh
-    - echo $PWD
     - cd /
     - cp -r /builds/adam-zielonka-pro/deska/* /var/www
     - cd /var/www/
-    - echo $PWD
-    - ls -alh
+    - chmod +x docker/docker-entrypoint.sh
+    - docker/docker-entrypoint.sh
     - echo '😃'
     - rm -fr public
     - mv build public
