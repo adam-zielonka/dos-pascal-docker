@@ -10,3 +10,5 @@ COPY docker/dosbox-0.74-2.conf /root/.dosbox/dosbox-0.74-2.conf
 RUN mkdir /tp
 COPY 3rd-party/TPWDB.ZIP TPWDB.ZIP
 RUN unzip TPWDB.ZIP -d /tp
+
+WORKDIR /var/www
