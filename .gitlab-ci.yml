@@ -9,7 +9,7 @@ pages:
   only:
     - master
 
-pages:
+build:
   image: registry.gitlab.com/adam-zielonka-pro/deska
   script:
     - echo '😃'

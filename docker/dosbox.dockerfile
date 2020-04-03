@@ -10,4 +10,6 @@ COPY 3rd-party/TPWDB.ZIP TPWDB.ZIP
 RUN unzip TPWDB.ZIP -d /tp
 COPY docker/docker-entrypoint.sh docker-entrypoint.sh
 RUN chmod +x ./docker-entrypoint.sh
+
+WORKDIR /var/www
 ENTRYPOINT [ "/docker-entrypoint.sh" ]
