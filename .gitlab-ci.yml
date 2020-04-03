@@ -15,8 +15,8 @@ build:
     - ls -alh
     - echo $PWD
     - cd /
-    - cp -r /builds/adam-zielonka-pro/deska/ /var/www
-    - cd /var/www
+    - cp -r /builds/adam-zielonka-pro/deska /var/www
+    - cd /var/www/
     - echo $PWD
     - ls -alh
     - echo '😃'
