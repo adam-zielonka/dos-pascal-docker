@@ -12,9 +12,11 @@ pages:
 build:
   image: registry.gitlab.com/adam-zielonka-pro/deska
   before_script:
+  script:
     - cd /
     - cp -r /builds/adam-zielonka-pro/deska/ /var/www/
-  script:
+    - cd /var/www/
+    - /docker-entrypoint.sh
     - echo '😃'
     - rm -fr public
     - mv build public
