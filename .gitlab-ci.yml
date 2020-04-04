@@ -3,7 +3,7 @@ pages:
     name: registry.gitlab.com/adam-zielonka-pro/deska
     entrypoint: [""]
   script:
-    - /docker-entrypoint.sh GRA.PAS
+    - /docker-entrypoint.sh DESKA.PAS
     - echo '😃'
     - mv build public
   artifacts:

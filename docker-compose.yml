@@ -5,8 +5,8 @@ services:
     build:
       context: ./
       dockerfile: docker/dosbox.dockerfile
-    working_dir: /var/www
+    working_dir: /project
     volumes:
-      - ./:/var/www
-    command: ['GRA.PAS']
+      - ./:/project
+    command: ['DESKA.PAS']
 
