@@ -48,8 +48,10 @@
     <canvas id="jsdos"></canvas>
   </div>
   <script>
+    indexedDB.deleteDatabase('/GRA')
+    
     Dos(document.getElementById("jsdos")).ready((fs, main) => {
-      fs.extract("!!!ZIP_FILENAME!!!",'/gra').then(() => {
+      fs.extract("!!!ZIP_FILENAME!!!",'/GRA').then(() => {
         main([
           "-c", "cd gra",
           "-c", "KEYB pl",
