@@ -8,7 +8,7 @@ This game was created in January 2011. At the time I did not know anything about
 
 ## How to run this game?
 You can go to this webiste: [Play](https://deska.adamzielonka.pro/), the game run via [js-dos](https://js-dos.com/)  
-You can also download the game from this: [Download](https://gitlab.com/adam-zielonka-pro/pascal-games/deska/raw/master/public/DESKA.ZIP?inline=false), and run in [DOSBox](https://www.dosbox.com/).
+You can also download the game from this: [Download](https://deska.adamzielonka.pro/DESKA.ZIP), and run in [DOSBox](https://www.dosbox.com/).
 
 The code was written using OEM 852 character set, so if you run this game by yourself, you should remeber to change default charset using this command:
 
