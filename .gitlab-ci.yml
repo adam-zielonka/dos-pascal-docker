@@ -10,9 +10,11 @@ pages:
     - master
 
 build:
-  image: registry.gitlab.com/adam-zielonka-pro/deska
+  image: 
+    name: registry.gitlab.com/adam-zielonka-pro/deska
+    entrypoint: [""]
   script:
-    - GRA.PAS
+    - /docker-entrypoint.sh GRA.PAS
     - echo '😃'
     - rm -fr public
     - mv build public
