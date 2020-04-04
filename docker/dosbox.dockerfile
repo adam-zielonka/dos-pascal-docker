@@ -1,4 +1,4 @@
-# docker build -f docker/ci.dockerfile -t registry.gitlab.com/adam-zielonka-pro/deska .
+# docker build -f docker/dosbox.dockerfile -t registry.gitlab.com/adam-zielonka-pro/deska .
 # docker push registry.gitlab.com/adam-zielonka-pro/deska
 FROM tudorh/dosbox:latest
 

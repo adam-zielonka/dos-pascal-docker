@@ -9,4 +9,4 @@ dosbox -c "MOUNT C: $PWD" -c "MOUNT D: /tp" -c "c:" -c "CD C:\BUILD" -c "D:\BIN\
 cat build/LOG.TXT
 zip -rj build/DESKA.ZIP build/
 unzip 3rd-party/js-dos.zip -d build/
-cp public/index.html build/index.html
+cp web/index.html build/index.html
