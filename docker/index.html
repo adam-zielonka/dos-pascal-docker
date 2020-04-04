@@ -53,12 +53,15 @@
     indexedDB.deleteDatabase('/GRA')
     
     Dos(document.getElementById("jsdos")).ready((fs, main) => {
-      fs.extract("!!!ZIP_FILENAME!!!",'/GRA').then(() => {
+      fs.extractAll([
+        {url: "!!!TITLE!!!.ZIP", mountPoint: '/STATE'},
+        {url: "!!!ZIP_FILENAME!!!", mountPoint: '/GRA'},
+      ]).then(() => {
         main([
-          "-c", "cd gra",
           "-c", "KEYB pl",
+          "-c", "CD STATE",
+          "-c", "COPY C:/GRA/!!!EXE_FILENAME!!!",
           "-c", "!!!EXE_FILENAME!!!",
-          "-c", "cls",
           "-c", "@dir"
         ])
       });
