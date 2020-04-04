@@ -10,3 +10,6 @@ pages:
     expire_in: 1 week
     paths:
     - public
+  only:
+    - master
+  
