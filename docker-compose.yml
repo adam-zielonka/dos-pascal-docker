@@ -1,0 +1,12 @@
+version: '3.7'
+services:
+
+  app:
+    build:
+      context: ./
+      dockerfile: docker/dosbox.dockerfile
+    working_dir: /var/www
+    volumes:
+      - ./:/var/www
+    command: ['GRA.PAS']
+

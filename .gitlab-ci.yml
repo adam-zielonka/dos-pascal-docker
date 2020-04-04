@@ -1,10 +1,15 @@
 pages:
-  image: alpine:latest
+  image: 
+    name: registry.gitlab.com/adam-zielonka-pro/deska
+    entrypoint: [""]
   script:
+    - /docker-entrypoint.sh GRA.PAS
     - echo '😃'
+    - mv build public
   artifacts:
     expire_in: 1 week
     paths:
     - public
   only:
     - master
+  
