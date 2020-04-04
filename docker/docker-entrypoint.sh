@@ -10,7 +10,7 @@ dosbox -c "MOUNT C: $PWD" -c "MOUNT D: /tp" -c "c:" -c "CD C:\BUILD" -c "D:\BIN\
 cat build/LOG.TXT
 zip -rj build/$TITLE.ZIP build/
 
-MD5_ZIP_SUM=$(md5sum build/BUILD.ZIP | cut -d ' ' -f 1)
+MD5_ZIP_SUM=$(md5sum build/$TITLE.ZIP | cut -d ' ' -f 1)
 ZIP_FILE_NAME=$1-$MD5_ZIP_SUM.ZIP
 echo $ZIP_FILE_NAME
 cp build/$TITLE.ZIP build/$ZIP_FILE_NAME
