@@ -1,5 +1,3 @@
-# docker build -t registry.gitlab.com/adam-zielonka-pro/dos-pascal-docker .
-# docker push registry.gitlab.com/adam-zielonka-pro/dos-pascal-docker
 FROM tudorh/dosbox:latest
 
 RUN apk update && apk add zip
