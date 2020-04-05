@@ -1,5 +1,5 @@
-# docker build -f docker/dosbox.dockerfile -t registry.gitlab.com/adam-zielonka-pro/deska .
-# docker push registry.gitlab.com/adam-zielonka-pro/deska
+# docker build -t registry.gitlab.com/adam-zielonka-pro/dos-pascal-docker .
+# docker push registry.gitlab.com/adam-zielonka-pro/dos-pascal-docker
 FROM tudorh/dosbox:latest
 
 RUN apk update && apk add zip
@@ -13,9 +13,9 @@ RUN unzip TPWDB.ZIP -d /tp
 RUN mkdir /web
 COPY 3rd-party/js-dos.zip js-dos.zip
 RUN unzip js-dos.zip -d /web
-COPY docker/index.html /web/index.html
+COPY index.html /web/index.html
 
-COPY docker/docker-entrypoint.sh docker-entrypoint.sh
+COPY docker-entrypoint.sh docker-entrypoint.sh
 RUN chmod +x ./docker-entrypoint.sh
 
 ENTRYPOINT [ "/docker-entrypoint.sh" ]
