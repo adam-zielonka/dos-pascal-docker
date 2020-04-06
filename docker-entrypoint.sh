@@ -6,7 +6,7 @@ FILE=$1
 TITLE=$(echo $1 | cut -d '.' -f 1)
 rm -fr build
 cp -r src build
-dosbox -c "MOUNT C: $PWD" -c "MOUNT D: /tp" -c "c:" -c "CD C:\BUILD" -c "D:\BIN\TPC.EXE $1 > LOG.TXT" -c "EXIT"
+dosbox -c "MOUNT C: $PWD" -c "MOUNT D: /tpc" -c "c:" -c "CD C:\BUILD" -c "D:\TPC.EXE $1 > LOG.TXT" -c "EXIT"
 cat build/LOG.TXT
 if cat build/LOG.TXT | grep -q Error ; then exit 500 ; fi
 zip -rj build/$TITLE.ZIP build/

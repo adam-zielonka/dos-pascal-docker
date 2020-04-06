@@ -54,12 +54,12 @@
     
     Dos(document.getElementById("jsdos")).ready((fs, main) => {
       fs.extractAll([
-        {url: "!!!TITLE!!!.ZIP", mountPoint: '/STATE'},
+        {url: "!!!TITLE!!!.ZIP", mountPoint: '/!!!TITLE!!!'},
         {url: "!!!ZIP_FILENAME!!!", mountPoint: '/GRA'},
       ]).then(() => {
         main([
           "-c", "KEYB pl",
-          "-c", "CD STATE",
+          "-c", "CD !!!TITLE!!!",
           "-c", "COPY C:\\GRA\\!!!EXE_FILENAME!!!",
           "-c", "!!!EXE_FILENAME!!!",
           "-c", "@dir"
