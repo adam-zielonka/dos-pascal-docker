@@ -10,7 +10,7 @@ You have several options to use this docker. In this example in main project dir
 ### docker cli
 
 ```bash
-$ docker run --rm -it -w="/project" -v $(pwd):/project registry.gitlab.com/adam-zielonka-pro/dos-pascal-docker:latest DESKA.PAS
+$ docker run --rm -it -w="/project" -v $(pwd):/project registry.gitlab.com/adam-zielonka-pro/dos-pascal-docker:latest src/DESKA.PAS
 ```
 
 ### docker-compose.yml
@@ -24,7 +24,7 @@ services:
     working_dir: /project
     volumes:
       - ./:/project
-    command: ['DESKA.PAS']
+    command: ['src/DESKA.PAS']
 ```
 
 ### .gitlab-ci.yml
@@ -35,7 +35,7 @@ pages:
     name: registry.gitlab.com/adam-zielonka-pro/dos-pascal-docker
     entrypoint: [""]
   script:
-    - /docker-entrypoint.sh DESKA.PAS
+    - /docker-entrypoint.sh src/DESKA.PAS
     - mv build public
   artifacts:
     expire_in: 1 week
