@@ -11,6 +11,22 @@ FILE=$(basename $1)
 DIR=$(dirname $1)
 TITLE=$(echo $FILE | cut -d '.' -f 1)
 
+if [[ "$2" == "--watch" ]] ; then
+  while true; do
+    inotifywait -e MODIFY --format '%w' $DIR/*.[Pp][Aa][Ss] | while read FILE_TEST
+    do
+      if [ ! -s $FILE_TEST ] ; then break; fi
+      rm -fr build
+      mkdir build
+      cp -r `ls -Ad $DIR/* | grep -v "build"` build
+      ls -1Ad build/*.[Pp][Aa][Ss] | xargs encode.sh
+      dosbox -c "MOUNT C: $PWD" -c "MOUNT D: /tpc" -c "c:" -c "CD C:\BUILD" -c "D:\TPC.EXE $FILE > LOG.TXT" -c "EXIT" > /dev/null
+      cat build/LOG.TXT
+      echo ''
+    done
+  done
+fi
+
 rm -fr build
 mkdir build
 cp -r `ls -Ad $DIR/* | grep -v "build"` build
