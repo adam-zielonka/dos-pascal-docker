@@ -12,10 +12,11 @@ DIR=$(dirname $1)
 TITLE=$(echo $FILE | cut -d '.' -f 1)
 
 if [[ "$2" == "--watch" ]] ; then
+  echo Started watching files
   while true; do
-    inotifywait -e MODIFY --format '%w' $DIR/*.[Pp][Aa][Ss] | while read FILE_TEST
+    inotifywait -q -e MODIFY --format '%w' $DIR/*.[Pp][Aa][Ss] | while read FILE_TEST
     do
-      if [ ! -s $FILE_TEST ] ; then break; fi
+      while [ ! -s $FILE_TEST ] ; do true; done
       rm -fr build
       mkdir build
       cp -r `ls -Ad $DIR/* | grep -v "build"` build
