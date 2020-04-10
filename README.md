@@ -10,7 +10,8 @@ You have several options to use this docker. In this example in main project dir
 ### docker cli
 
 ```bash
-$ docker run --rm -it -w="/project" -v $(pwd):/project registry.gitlab.com/adam-zielonka-pro/dos-pascal-docker:latest src/DESKA.PAS
+$ docker run --rm -it -w="/project" -v $(pwd):/project \
+  registry.gitlab.com/adam-zielonka-pro/dos-pascal-docker:latest src/DESKA.PAS
 ```
 
 ### docker-compose.yml
