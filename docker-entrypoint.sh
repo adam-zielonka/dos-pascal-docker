@@ -14,6 +14,7 @@ TITLE=$(echo $FILE | cut -d '.' -f 1)
 rm -fr build
 mkdir build
 cp -r `ls -Ad $DIR/* | grep -v "build"` build
+ls -1Ad build/*.[Pp][Aa][Ss] | xargs encode.sh 
 dosbox -c "MOUNT C: $PWD" -c "MOUNT D: /tpc" -c "c:" -c "CD C:\BUILD" -c "D:\TPC.EXE $FILE > LOG.TXT" -c "EXIT" > /dev/null
 cat build/LOG.TXT
 if cat build/LOG.TXT | grep -q Error ; then exit 1 ; fi
