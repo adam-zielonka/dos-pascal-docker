@@ -12,7 +12,7 @@ DIR=$(dirname $1)
 TITLE=$(echo $FILE | cut -d '.' -f 1)
 
 if [[ "$2" == "--watch" ]] ; then
-  echo Started watching files
+  echo 'Watching for file changes.'
   while true; do
     inotifywait -q -e MODIFY --format '%w' $DIR/*.[Pp][Aa][Ss] | while read FILE_TEST
     do
@@ -24,6 +24,7 @@ if [[ "$2" == "--watch" ]] ; then
       dosbox -c "MOUNT C: $PWD" -c "MOUNT D: /tpc" -c "c:" -c "CD C:\BUILD" -c "D:\TPC.EXE $FILE > LOG.TXT" -c "EXIT" > /dev/null
       cat build/LOG.TXT
       echo ''
+      echo 'Watching for file changes.'
     done
   done
 fi
