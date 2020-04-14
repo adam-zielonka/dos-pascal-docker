@@ -2,6 +2,8 @@
 
 set -e
 
+if [ -z $1 ] ; then exit 0; fi
+
 sed -i "s/☺//g" $1
 sed -i "s/☻//g" $1
 sed -i "s/♥//g" $1
