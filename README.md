@@ -36,7 +36,7 @@ pages:
     name: registry.gitlab.com/adam-zielonka-pro/dos-pascal-docker
     entrypoint: [""]
   script:
-    - /docker-entrypoint.sh src/DESKA.PAS
+    - docker-entrypoint.sh src/DESKA.PAS
     - mv build public
   artifacts:
     expire_in: 1 week
