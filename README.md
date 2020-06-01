@@ -5,7 +5,7 @@ I used in two my old projects: [Deska](https://gitlab.com/adam-zielonka-pro/desk
 
 ## How to use
 
-You have several options to use this docker. In this example in main project directory exist folder `src` and inside this folder exist file called `DESKA.ZIP`.
+You have several options to use this docker. In this example in main project directory exist folder `src` and inside this folder exist file called `DESKA.PAS`.
 
 ### docker cli
 
@@ -13,6 +13,8 @@ You have several options to use this docker. In this example in main project dir
 $ docker run --rm -it -w="/project" -v $(pwd):/project \
   registry.gitlab.com/adam-zielonka-pro/dos-pascal-docker:latest src/DESKA.PAS
 ```
+
+You can add `--watch` to auto-compile after file changes.
 
 ### docker-compose.yml
 
