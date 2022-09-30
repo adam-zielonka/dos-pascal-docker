@@ -53,7 +53,7 @@ pages:
 To build this docker I used:
 
 - [DOSBox](https://www.dosbox.com/)
-- [Turbo Pascal (With DOSBox)](http://turbopascaldb.dx.am/)
+- [Turbo Pascal (With DOSBox)](https://sourceforge.net/projects/turbopascal-wdb/)
 - [js-dos](https://js-dos.com/)
 - [tudorh/dosbox](https://hub.docker.com/r/tudorh/dosbox)
 
