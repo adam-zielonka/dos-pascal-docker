@@ -9,9 +9,18 @@ You have several options to use this docker. In this example in main project dir
 
 ### docker cli
 
-```bash
-$ docker run --rm -it -w="/project" -v $(pwd):/project \
+You can use GitLab Registry
+
+```shell
+docker run --rm -it -w="/project" -v $(pwd):/project \
   registry.gitlab.com/adam-zielonka-pro/dos-pascal-docker:latest src/DESKA.PAS
+```
+
+or using GitHub Registry
+
+```shell
+docker run --rm -it -w="/project" -v $(pwd):/project \
+  ghcr.io/adam-zielonka/dos-pascal-docker:main src/DESKA.PAS
 ```
 
 You can add `--watch` to auto-compile after file changes.
@@ -24,6 +33,7 @@ services:
 
   app:
     image: registry.gitlab.com/adam-zielonka-pro/dos-pascal-docker
+    # image: ghcr.io/adam-zielonka/dos-pascal-docker:main
     working_dir: /project
     volumes:
       - ./:/project
@@ -36,6 +46,7 @@ services:
 pages:
   image: 
     name: registry.gitlab.com/adam-zielonka-pro/dos-pascal-docker
+    # name: ghcr.io/adam-zielonka/dos-pascal-docker:main
     entrypoint: [""]
   script:
     - docker-entrypoint.sh src/DESKA.PAS
