@@ -1,4 +1,4 @@
-name: 'dos-pascal'
+name: 'dos-pascal-docker'
 description: 'Compile Turbo Pascal for DOS'
 inputs:
   path:
