@@ -1,0 +1,11 @@
+name: 'dos-pascal'
+description: 'Compile Turbo Pascal for DOS'
+inputs:
+  path:
+    description: 'Path for main pascal file e.g. "src/MAIN.PAS"'
+    required: true
+runs:
+  using: 'docker'
+  image: 'Dockerfile'
+  args:
+    - ${{ inputs.path }}
