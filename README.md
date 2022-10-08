@@ -1,7 +1,7 @@
 # dos-pascal-docker
 
 Docker to compile pascal file in dos and build website to run created exe file.
-I used in two my old projects: [Deska](https://gitlab.com/adam-zielonka-pro/deska) and [Saper](https://gitlab.com/adam-zielonka-pro/saper).
+I used in two my old projects: [Deska](https://github.com/adam-zielonka/deska) and [Saper](https://github.com/adam-zielonka/saper).
 
 ## How to use
 
