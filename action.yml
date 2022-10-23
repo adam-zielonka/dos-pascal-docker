@@ -6,6 +6,6 @@ inputs:
     required: true
 runs:
   using: 'docker'
-  image: 'Dockerfile'
+  image: 'ghcr.io/adam-zielonka/dos-pascal-docker:main'
   args:
     - ${{ inputs.path }}
