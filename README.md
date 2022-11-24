@@ -86,7 +86,7 @@ jobs:
 ```yml
 pages:
   image: 
-  name: ghcr.io/adam-zielonka/dos-pascal-docker:main
+    name: ghcr.io/adam-zielonka/dos-pascal-docker:main
     entrypoint: [""]
   script:
     - docker-entrypoint.sh src/DESKA.PAS
