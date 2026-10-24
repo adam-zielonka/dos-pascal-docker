@@ -3,6 +3,8 @@
 Docker to compile pascal file in dos and build website to run created exe file.
 I used in two my old projects: [Deska](https://github.com/adam-zielonka/deska) and [Saper](https://github.com/adam-zielonka/saper).
 
+The image uses supported Alpine 3.24 with the SDL 1.2 compatibility layer. CI compiles and runs a Pascal program and verifies the generated website before publishing the image.
+
 ## How to use
 
 You have several options to use this docker. In this example in main project directory exist folder `src` and inside this folder exist file called `DESKA.PAS`.

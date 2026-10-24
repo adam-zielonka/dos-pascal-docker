@@ -70,17 +70,32 @@ jobs:
 
       # Build and push Docker image with Buildx (don't push on PR)
       # https://github.com/docker/build-push-action
-      - name: Build and push Docker image
-        id: build-and-push
+      - name: Build image for validation
+        id: build-tested
         uses: docker/build-push-action@v7.4.0
         with:
           context: .
-          push: ${{ github.event_name != 'pull_request' }}
+          load: true
+          push: false
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
 
+
+      - name: Smoke test compiler and generated website
+        run: docker run --rm --entrypoint sh "${{ steps.build-tested.outputs.imageid }}" /usr/local/bin/smoke-test.sh
+
+      - name: Publish validated image
+        id: build-and-push
+        if: github.event_name != 'pull_request'
+        uses: docker/build-push-action@v7.4.0
+        with:
+          context: .
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+          cache-from: type=gha
 
       # Sign the resulting Docker image digest except on PRs.
       # This will only write to the public Rekor transparency log when the Docker
