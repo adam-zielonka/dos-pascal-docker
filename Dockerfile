@@ -1,6 +1,6 @@
 FROM alpine:3.24
 
-ENV SDL_VIDEODRIVER dummy
+ENV SDL_VIDEODRIVER=dummy SDL_AUDIODRIVER=dummy
 
 ADD ["bin/tpc.tar.gz", "/tpc/"]
 ADD ["bin/js-dos.tar.gz", "index.html", "/web/"]
