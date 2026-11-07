@@ -5,6 +5,23 @@ I used in two my old projects: [Deska](https://github.com/adam-zielonka/deska) a
 
 The image uses supported Alpine 3.24 with the SDL 1.2 compatibility layer. CI compiles and runs a Pascal program and verifies the generated website before publishing the image.
 
+## Browser player
+
+Generated games use a responsive beige CRT monitor inspired by the portfolio,
+with glass reflections, subtle scanlines and the original game colours. The
+screen keeps its proportions and leaves a safe border around all 25 text rows.
+A mini pad below the monitor supports touch, mouse and keyboard activation;
+held keys are released when a pointer is cancelled or the page loses focus.
+
+Deska adds Pause and an expandable letter pad for entering a high-score name.
+Saper adds mine (`.`), question mark (`/`, as expected by the original game) and
+help (`F1`) buttons. Use Space to select Saper menu items: the original game's
+Enter handling differs for the help entry. The round monitor button restarts
+the emulator. The ZIP download remains available for standalone DOSBox use.
+
+The player uses the bundled js-dos API; no additional CDN assets are required.
+`index.html`, `player.css` and `player.js` are copied into every generated site.
+
 ## How to use
 
 You have several options to use this docker. In this example in main project directory exist folder `src` and inside this folder exist file called `DESKA.PAS`.
@@ -113,3 +130,17 @@ To build this docker I used:
 ## License
 
 MIT
+
+## Player checks
+
+With Node.js 24 and pnpm 12 installed:
+
+```sh
+pnpm install --frozen-lockfile
+pnpm exec playwright install --with-deps --only-shell chromium
+pnpm test
+```
+
+The browser tests cover game-specific controls, touch and keyboard activation,
+held-key cleanup, load failures and layout at 320–1280 px. Docker CI also builds
+and runs a Pascal executable and checks the generated player assets.

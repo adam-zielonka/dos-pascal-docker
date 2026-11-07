@@ -1,0 +1,11 @@
+{
+  "name": "dos-pascal-player-tests",
+  "private": true,
+  "scripts": {
+    "test": "node --test tests/player.test.cjs"
+  },
+  "devDependencies": {
+    "@playwright/test": "1.64.1"
+  },
+  "packageManager": "pnpm@12.18.0"
+}

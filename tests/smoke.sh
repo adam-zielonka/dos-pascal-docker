@@ -11,3 +11,9 @@ grep -q SMOKE_OK build/RESULT.TXT
 website.sh HELLO
 test -s build/index.html
 test -s build/HELLO.ZIP
+test -s build/player.css
+test -s build/player.js
+! grep -q '!!!' build/index.html
+grep -q 'data-game="HELLO"' build/index.html
+grep -q 'data-executable="HELLO.EXE"' build/index.html
+grep -q 'id="controls"' build/index.html

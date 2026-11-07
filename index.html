@@ -1,72 +1,69 @@
 <!doctype html>
-<html lang="en">
-
+<html lang="pl">
 <head>
   <meta charset="utf-8">
-  <title>!!!TITLE!!!</title>
-  <script src="js-dos.js"></script>
-  <meta name="keywords" content="dosbox, js-dos, turbo pascal game, emulate dos" />
-  <meta name="description" content="Game written in Pascal run by js-dos" />
-  <style>
-    html, body {
-      height: 100%;
-    }
-    body {
-      background: black;
-      margin: 0;
-    }
-    #content {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100%;
-      padding: 0;
-      margin: 0;
-    }
-
-    @media screen and (min-width: 640px) and (min-height: 400px) {
-      #jsdos {
-        width: 640px; height: 400px;
-      }
-    }
-
-    @media screen and (min-width: 960px) and (min-height: 480px) {
-      #jsdos {
-        width: 960px; height: 480px;
-      }
-    }
-
-    @media screen and (min-width: 1280px) and (min-height: 640px) {
-      #jsdos {
-        width: 1280px; height: 640px;
-      }
-    }
-
-  </style>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>!!!TITLE!!! · DOS Arcade</title>
+  <meta name="description" content="Klasyczna gra w Pascalu na ekranie monitora CRT. Graj klawiaturą lub mini padem.">
+  <link rel="stylesheet" href="player.css">
+  <script src="js-dos.js" defer></script>
+  <script src="player.js" defer></script>
 </head>
-
 <body>
-  <div id="content">
-    <canvas id="jsdos"></canvas>
-  </div>
-  <script>
-    indexedDB.deleteDatabase('/GRA')
-    
-    Dos(document.getElementById("jsdos")).ready((fs, main) => {
-      fs.extractAll([
-        {url: "!!!TITLE!!!.ZIP", mountPoint: '/!!!TITLE!!!'},
-        {url: "!!!ZIP_FILENAME!!!", mountPoint: '/GRA'},
-      ]).then(() => {
-        main([
-          "-c", "KEYB pl",
-          "-c", "CD !!!TITLE!!!",
-          "-c", "COPY C:\\GRA\\!!!EXE_FILENAME!!!",
-          "-c", "!!!EXE_FILENAME!!!",
-          "-c", "@dir"
-        ])
-      });
-    });
-  </script>
+  <main class="arcade" data-game="!!!TITLE!!!" data-archive="!!!ZIP_FILENAME!!!" data-executable="!!!EXE_FILENAME!!!">
+    <section class="monitor" aria-label="Monitor gry !!!TITLE!!!">
+      <div class="glass">
+        <div class="display">
+          <canvas id="jsdos" width="640" height="400" tabindex="0" aria-label="Ekran gry !!!TITLE!!!. Sterowanie opisano pod monitorem."></canvas>
+          <div class="boot" id="boot" role="status">
+            <strong>!!!TITLE!!!</strong>
+            <span id="status">Uruchamianie DOS…</span>
+            <button id="retry" type="button" hidden>Spróbuj ponownie</button>
+          </div>
+        </div>
+      </div>
+      <div class="chin">
+        <div class="badge">!!!TITLE!!!<span>COLOR CRT<br>DOS / PASCAL</span></div>
+        <div class="vents" aria-hidden="true"></div>
+        <div class="hardware">
+          <span class="indicator"><i id="led"></i>POWER</span>
+          <button class="restart" id="restart" type="button" aria-label="Uruchom grę ponownie" title="Uruchom grę ponownie">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M12 3v9M6.3 5.9a8 8 0 1 0 11.4 0"/></svg>
+          </button>
+        </div>
+      </div>
+    </section>
+    <div class="stand" aria-hidden="true"></div>
+    <section class="controller" aria-label="Mini pad">
+      <div class="controller-heading"><span>MINI PAD</span><span>KEYBOARD / TOUCH</span></div>
+      <fieldset id="controls" disabled>
+        <legend class="sr-only">Sterowanie grą</legend>
+        <div class="dpad" aria-label="Kierunki">
+          <button type="button" class="up" data-key="38" aria-label="W górę">▲</button>
+          <button type="button" class="left" data-key="37" aria-label="W lewo">◀</button>
+          <span class="dpad-center" aria-hidden="true"></span>
+          <button type="button" class="right" data-key="39" aria-label="W prawo">▶</button>
+          <button type="button" class="down" data-key="40" aria-label="W dół">▼</button>
+        </div>
+        <div class="actions">
+          <button type="button" class="action" data-key="32"><span>SPACJA</span><small id="space-label">Akcja / wybierz</small></button>
+          <button type="button" class="action" data-key="13"><span>ENTER</span><small>Zatwierdź</small></button>
+          <button type="button" data-key="27">Esc<small>Powrót</small></button>
+          <button type="button" data-key="80" data-for="DESKA" hidden>P<small>Pauza</small></button>
+          <button type="button" data-key="190" data-for="SAPER" hidden>.<small>Mina</small></button>
+          <button type="button" data-key="191" data-for="SAPER" hidden>?<small>Pytajnik /</small></button>
+          <button type="button" data-key="112" data-for="SAPER" hidden>F1<small>Pomoc</small></button>
+        </div>
+      </fieldset>
+      <p id="hint">Strzałki wybierają, Spacja lub Enter zatwierdza.</p>
+      <details data-for="DESKA" hidden>
+        <summary>Klawiatura do wpisania rekordu</summary>
+        <div id="letters" aria-label="Litery imienia"></div>
+        <p>Wpisuj dopiero, gdy gra poprosi o imię. Enter zatwierdza.</p>
+      </details>
+    </section>
+    <footer><a href="!!!TITLE!!!.ZIP">Pobierz grę DOS ↓</a><span>Turbo Pascal · <a href="https://js-dos.com/">js-dos</a></span></footer>
+    <noscript>Włącz JavaScript, aby uruchomić grę. Możesz też pobrać ją i otworzyć w DOSBox.</noscript>
+  </main>
 </body>
-
 </html>

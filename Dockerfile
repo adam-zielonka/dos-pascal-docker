@@ -3,7 +3,7 @@ FROM alpine:3.24
 ENV SDL_VIDEODRIVER=dummy SDL_AUDIODRIVER=dummy
 
 ADD ["bin/tpc.tar.gz", "/tpc/"]
-ADD ["bin/js-dos.tar.gz", "index.html", "/web/"]
+ADD ["bin/js-dos.tar.gz", "index.html", "player.css", "player.js", "/web/"]
 ADD ["bin/iconv.tar.gz", "/usr/local/"]
 ADD ["bin/dosbox.tar.gz", "/usr/local/bin/"]
 
