@@ -15,8 +15,10 @@ cp build/$TITLE.ZIP build/$ZIP_FILE_NAME
 
 cp /web/* build/
 
-sed -i "s/!!!TITLE!!!/$TITLE/g" build/index.html
-sed -i "s/!!!ZIP_FILENAME!!!/$ZIP_FILE_NAME/g" build/index.html
-sed -i "s/!!!EXE_FILENAME!!!/$TITLE.EXE/g" build/index.html
+mkdir -p build/full-screen
+mv build/full-screen.html build/full-screen/index.html
+sed -i -e "s/!!!TITLE!!!/$TITLE/g" \
+       -e "s/!!!ZIP_FILENAME!!!/$ZIP_FILE_NAME/g" \
+       -e "s/!!!EXE_FILENAME!!!/$TITLE.EXE/g" build/index.html build/full-screen/index.html
 
 echo Website generated successfully

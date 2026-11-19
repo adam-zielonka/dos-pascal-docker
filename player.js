@@ -1,6 +1,8 @@
 (() => {
   'use strict';
-  const arcade = document.querySelector('.arcade');
+  const playerUrl = document.currentScript.src;
+  const assetUrl = name => new URL(name, playerUrl).href;
+  const arcade = document.querySelector('[data-game]');
   const game = arcade.dataset.game;
   const canvas = document.getElementById('jsdos');
   const controls = document.getElementById('controls');
@@ -11,32 +13,34 @@
   let ci;
   const held = new Map();
 
-  document.querySelectorAll('[data-for]').forEach(element => {
-    element.hidden = element.dataset.for !== game.toUpperCase();
-  });
-  if (game.toUpperCase() === 'DESKA') {
-    document.getElementById('space-label').textContent = 'Start piłki';
-    document.getElementById('hint').textContent = '← → ruch deski · Spacja / Enter: start piłki · P: pauza. W menu użyj ↑ ↓ i Spacji.';
-  } else if (game.toUpperCase() === 'SAPER') {
-    document.getElementById('space-label').textContent = 'Odkryj / wybierz';
-    document.getElementById('hint').textContent = 'Strzałki: ruch · Spacja / Enter: odkryj · .: mina · /: pytajnik. W menu wybieraj Spacją.';
-  }
-  // A real key pad also works with Turbo Pascal ReadLn on touch-only devices.
-  const letters = document.getElementById('letters');
-  for (const letter of 'ABCDEFGHIJKLMNOPQRSTUVWXYZ') {
-    const button = document.createElement('button');
-    button.type = 'button';
-    button.textContent = letter;
-    button.dataset.key = letter.charCodeAt(0);
-    letters.append(button);
-  }
-  for (const [label, code] of [['⌫', 8], ['Spacja', 32], ['Enter', 13]]) {
-    const button = document.createElement('button');
-    button.type = 'button';
-    button.textContent = label;
-    button.setAttribute('aria-label', code === 8 ? 'Usuń literę' : label);
-    button.dataset.key = code;
-    letters.append(button);
+  if (controls) {
+    document.querySelectorAll('[data-for]').forEach(element => {
+      element.hidden = element.dataset.for !== game.toUpperCase();
+    });
+    if (game.toUpperCase() === 'DESKA') {
+      document.getElementById('space-label').textContent = 'Start piłki';
+      document.getElementById('hint').textContent = '← → ruch deski · Spacja / Enter: start piłki · P: pauza. W menu użyj ↑ ↓ i Spacji.';
+    } else if (game.toUpperCase() === 'SAPER') {
+      document.getElementById('space-label').textContent = 'Odkryj / wybierz';
+      document.getElementById('hint').textContent = 'Strzałki: ruch · Spacja / Enter: odkryj · .: mina · /: pytajnik. W menu wybieraj Spacją.';
+    }
+    // A real key pad also works with Turbo Pascal ReadLn on touch-only devices.
+    const letters = document.getElementById('letters');
+    for (const letter of 'ABCDEFGHIJKLMNOPQRSTUVWXYZ') {
+      const button = document.createElement('button');
+      button.type = 'button';
+      button.textContent = letter;
+      button.dataset.key = letter.charCodeAt(0);
+      letters.append(button);
+    }
+    for (const [label, code] of [['⌫', 8], ['Spacja', 32], ['Enter', 13]]) {
+      const button = document.createElement('button');
+      button.type = 'button';
+      button.textContent = label;
+      button.setAttribute('aria-label', code === 8 ? 'Usuń literę' : label);
+      button.dataset.key = code;
+      letters.append(button);
+    }
   }
   const buttons = [...document.querySelectorAll('[data-key]')];
   buttons.forEach(button => { button.disabled = true; });
@@ -86,15 +90,15 @@
   window.addEventListener('blur', releaseAll);
   document.addEventListener('visibilitychange', () => { if (document.hidden) releaseAll(); });
   window.addEventListener('pagehide', releaseAll);
-  document.getElementById('restart').addEventListener('click', () => { releaseAll(); location.reload(); });
+  document.getElementById('restart')?.addEventListener('click', () => { releaseAll(); location.reload(); });
   retry.addEventListener('click', () => location.reload());
 
   function fail(error) {
     releaseAll();
     ci = undefined;
-    controls.disabled = true;
+    if (controls) controls.disabled = true;
     buttons.forEach(button => { button.disabled = true; });
-    led.classList.remove('on');
+    led?.classList.remove('on');
     boot.hidden = false;
     status.textContent = 'Nie udało się uruchomić gry. Spróbuj ponownie.';
     retry.hidden = false;
@@ -106,12 +110,13 @@
       // Storage may be unavailable in privacy mode; it is not required to play.
       try { indexedDB.deleteDatabase('/GRA'); } catch (_) { /* optional cache */ }
       const { fs, main } = await Dos(canvas, {
+        wdosboxUrl: assetUrl('wdosbox.js'),
         onprogress: () => {},
         onerror: fail,
       });
       await fs.extractAll([
-        { url: `${game}.ZIP`, mountPoint: `/${game}` },
-        { url: arcade.dataset.archive, mountPoint: '/GRA' },
+        { url: assetUrl(`${game}.ZIP`), mountPoint: `/${game}` },
+        { url: assetUrl(arcade.dataset.archive), mountPoint: '/GRA' },
       ]);
       ci = await main([
         '-c', 'KEYB pl',
@@ -120,10 +125,10 @@
         '-c', arcade.dataset.executable,
         '-c', '@dir',
       ]);
-      controls.disabled = false;
+      if (controls) controls.disabled = false;
       buttons.forEach(button => { button.disabled = false; });
       boot.hidden = true;
-      led.classList.add('on');
+      led?.classList.add('on');
     } catch (error) {
       fail(error);
     }

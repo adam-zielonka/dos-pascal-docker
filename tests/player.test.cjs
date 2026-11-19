@@ -5,10 +5,11 @@ const fs = require('node:fs/promises');
 const path = require('node:path');
 const root = path.resolve(__dirname, '..');
 
-async function fixture(browser, game = 'SAPER', fail = false) {
+async function fixture(browser, game = 'SAPER', fail = false, fullScreen = false) {
   const page = await browser.newPage({ viewport: { width: 390, height: 844 }, hasTouch: true });
   await page.route('http://player.test/**', async route => {
-    const name = new URL(route.request().url()).pathname.slice(1) || 'index.html';
+    const pathname = new URL(route.request().url()).pathname;
+    const name = pathname === '/game/full-screen/' ? 'full-screen.html' : pathname.slice('/game/'.length) || 'index.html';
     if (name === 'js-dos.js') {
       return route.fulfill({ contentType: 'application/javascript', body: `
         window.events = [];
@@ -27,7 +28,7 @@ async function fixture(browser, game = 'SAPER', fail = false) {
     body = body.replaceAll('!!!TITLE!!!', game).replaceAll('!!!ZIP_FILENAME!!!', `${game}-hash.ZIP`).replaceAll('!!!EXE_FILENAME!!!', `${game}.EXE`);
     await route.fulfill({ contentType: mime, body });
   });
-  await page.goto('http://player.test/');
+  await page.goto(fullScreen ? 'http://player.test/game/full-screen/' : 'http://player.test/game/');
   await page.waitForFunction(() => document.querySelector('#boot').hidden || !document.querySelector('#retry').hidden);
   return page;
 }
@@ -39,8 +40,8 @@ test('mini pad: real input events, recovery and responsive game profiles', async
     assert.equal(await page.locator('[data-key="80"]').first().isVisible(), false);
     for (const key of [190, 191, 112]) assert.equal(await page.locator(`[data-key="${key}"]`).isVisible(), true);
     assert.deepEqual(await page.evaluate(() => archives), [
-      { url: 'SAPER.ZIP', mountPoint: '/SAPER' },
-      { url: 'SAPER-hash.ZIP', mountPoint: '/GRA' },
+      { url: 'http://player.test/game/SAPER.ZIP', mountPoint: '/SAPER' },
+      { url: 'http://player.test/game/SAPER-hash.ZIP', mountPoint: '/GRA' },
     ]);
     assert.ok((await page.evaluate(() => commands)).includes('COPY C:\\GRA\\SAPER.EXE'));
     await page.locator('[data-key="191"]').click();
@@ -84,6 +85,29 @@ test('mini pad: real input events, recovery and responsive game profiles', async
     assert.equal(await failed.locator('[data-key="32"]').first().isDisabled(), true);
     assert.equal(await failed.locator('#led').getAttribute('class'), null);
     await failed.close();
+  } finally {
+    await browser.close();
+  }
+});
+
+test('full-screen page fills the viewport and loads game assets from the game directory', async () => {
+  const browser = await chromium.launch();
+  try {
+    for (const game of ['DESKA', 'SAPER']) {
+      const page = await fixture(browser, game, false, true);
+      assert.equal(await page.locator('#boot').isVisible(), false);
+      assert.equal(await page.locator('.monitor, .controller, footer').count(), 0);
+      assert.deepEqual(await page.evaluate(() => archives.map(a => new URL(a.url, document.baseURI).pathname)),
+        [`/game/${game}.ZIP`, `/game/${game}-hash.ZIP`]);
+      for (const [width, height] of [[390, 844], [900, 360]]) {
+        await page.setViewportSize({ width, height });
+        assert.deepEqual(await page.locator('canvas').boundingBox(), { x: 0, y: 0, width, height });
+        assert.equal(await page.locator('canvas').evaluate(el => getComputedStyle(el).objectFit), 'contain');
+      }
+      await page.close();
+    }
+    const failed = await fixture(browser, 'DESKA', true, true);
+    assert.equal(await failed.locator('#retry').isVisible(), true);
   } finally {
     await browser.close();
   }

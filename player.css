@@ -11,6 +11,8 @@ button:focus-visible, a:focus-visible, summary:focus-visible, canvas:focus-visib
 .glass::after { content: ''; position: absolute; inset: 0; z-index: 2; pointer-events: none; border-radius: inherit; background: linear-gradient(125deg, #d8ffd308, transparent 38%), repeating-linear-gradient(0deg, #0000 0 2px, #0002 2px 3px); box-shadow: inset 0 0 12px 4px #0008, inset 0 0 60px #0004; }
 .display { position: relative; aspect-ratio: 8 / 5; }
 #jsdos { display: block; width: 100% !important; height: 100% !important; object-fit: contain; image-rendering: pixelated; }
+.full-screen { background: #000; }
+.full-screen .display { position: fixed; inset: 0; aspect-ratio: auto; }
 .boot { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 14px; color: #b2df96; background: #0b160f; text-align: center; font-size: clamp(11px, 2vw, 15px); }
 .boot strong { font-size: clamp(18px, 4vw, 32px); letter-spacing: .15em; }
 #retry { color: inherit; border: 1px solid; background: transparent; padding: 10px; }
